@@ -14,7 +14,8 @@ repositories {
 }
 
 dependencies {
-    implementation("dev.turingcomplete:kotlin-onetimepassword:2.3.0")
+    api("org.slf4j:slf4j-api:1.7.36")
+    api("org.slf4j:slf4j-simple:1.7.36")
     implementation("com.github.instagram4j:instagram4j:2.0.7")
     //https://github.com/agemor/neis-api/releases/tag/4.0.1
     api(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
