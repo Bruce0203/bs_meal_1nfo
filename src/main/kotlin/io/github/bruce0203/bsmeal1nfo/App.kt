@@ -1,11 +1,18 @@
 package io.github.bruce0203.bsmeal1nfo
 
 import com.github.instagram4j.instagram4j.IGClient
+import com.github.instagram4j.instagram4j.IGClient.Builder.LoginHandler
+import com.github.instagram4j.instagram4j.responses.accounts.LoginResponse
 import com.github.instagram4j.instagram4j.responses.media.MediaResponse.MediaConfigureTimelineResponse
+import com.github.instagram4j.instagram4j.utils.IGChallengeUtils
+import de.taimos.totp.TOTP
 import kr.go.neis.api.School
+import org.apache.commons.codec.binary.Base32
+import org.apache.commons.codec.binary.Hex
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.Callable
 
 
 fun main() {
@@ -18,7 +25,6 @@ fun main() {
 fun getWeek(): String {
     val cal = Calendar.getInstance()
     cal.time = Date()
-    println(cal[Calendar.DAY_OF_WEEK])
     return cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.NARROW_FORMAT, Locale.KOREAN)
 }
 
@@ -41,9 +47,21 @@ fun removeNumbersInString(input: String): String {
 }
 
 fun publish(dist: File, caption: String) {
+
+    val inputCode = Callable {
+        getTOTPCode(System.getenv("OTP_SECRET"))
+    }
+// handler for two factor login
+    val twoFactorHandler = LoginHandler { client: IGClient?, response: LoginResponse? ->
+        IGChallengeUtils.resolveTwoFactor(
+            client!!, response!!, inputCode
+        )
+    }
+
     val client = IGClient.builder()
         .username(System.getenv("INSTARGRAM_USERNAME"))
         .password(System.getenv("INSTARGRAM_PASSWORD"))
+        .onTwoFactor(twoFactorHandler)
         .login()
     client.actions()
         .timeline()
@@ -53,4 +71,11 @@ fun publish(dist: File, caption: String) {
             println(response)
         }
         .join() // block current thread until complete
+}
+
+fun getTOTPCode(secretKey: String?): String? {
+    val base32 = Base32()
+    val bytes: ByteArray = base32.decode(secretKey)
+    val hexKey: String = Hex.encodeHexString(bytes)
+    return TOTP.getOTP(hexKey)
 }

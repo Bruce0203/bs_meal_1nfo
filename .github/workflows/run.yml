@@ -3,6 +3,7 @@ on: push
 env:
   INSTARGRAM_USERNAME: ${{ secrets.INSTARGRAM_USERNAME }}
   INSTARGRAM_PASSWORD: ${{ secrets.INSTARGRAM_PASSWORD }}
+  OTP_SECRET: ${{ secrets.OTP_SECRET }}
 jobs:
   gradle:
     strategy:
