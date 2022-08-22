@@ -49,7 +49,7 @@ fun removeNumbersInString(input: String): String {
 fun publish(dist: File, caption: String) {
 
     val inputCode = Callable {
-        getTOTPCode(System.getenv("OTP_SECRET"))
+        getTOTPCode(System.getenv("OTP_SECRET")).apply(::println)
     }
 // handler for two factor login
     val twoFactorHandler = LoginHandler { client: IGClient?, response: LoginResponse? ->
