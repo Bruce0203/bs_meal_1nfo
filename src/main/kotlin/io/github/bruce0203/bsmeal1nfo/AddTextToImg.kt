@@ -1,8 +1,14 @@
 package io.github.bruce0203.bsmeal1nfo
 
 import java.awt.Color
+import java.awt.Font
+import java.awt.GraphicsEnvironment
 import java.io.File
 import javax.imageio.ImageIO
+import javax.swing.JList
+import javax.swing.JOptionPane
+import javax.swing.JScrollPane
+
 
 object AddTextToImg {
     @Throws(Exception::class)
@@ -14,7 +20,7 @@ object AddTextToImg {
         val g = image.graphics
         //set font
         g.color = Color.BLACK
-        g.font = g.font.deriveFont(110f)
+        g.font = getFont().deriveFont(110f)
         //display the text at the coordinates(x=50, y=150)
         txt.split("\n").forEachIndexed { ind, str ->
             g.drawString(str, 200, 350 + ind * 130)
@@ -23,5 +29,14 @@ object AddTextToImg {
         //write the image
         out.mkdirs()
         ImageIO.write(image, "png", out)
+    }
+
+    fun getFont(): Font {
+        val font: Font = Font.createFont(Font.TRUETYPE_FONT, File("assets/font/font.ttf"))
+        val ge = GraphicsEnvironment.getLocalGraphicsEnvironment()
+        ge.registerFont(font)
+        val fonts: JList<*> = JList<Any?>(ge.availableFontFamilyNames)
+        JOptionPane.showMessageDialog(null, JScrollPane(fonts))
+        return font
     }
 }
