@@ -3,7 +3,6 @@ package io.github.bruce0203.bsmeal1nfo
 import com.github.instagram4j.instagram4j.IGClient
 import com.github.instagram4j.instagram4j.IGClient.Builder.LoginHandler
 import com.github.instagram4j.instagram4j.responses.accounts.LoginResponse
-import com.github.instagram4j.instagram4j.responses.media.MediaResponse.MediaConfigureTimelineResponse
 import com.github.instagram4j.instagram4j.utils.IGChallengeUtils
 import de.taimos.totp.TOTP
 import kr.go.neis.api.School
@@ -58,10 +57,9 @@ fun publish(dist: File, caption: String) {
         .password(System.getenv("INSTARGRAM_PASSWORD"))
         .onTwoFactor(twoFactorHandler)
         .login()
-    client.actions()
-        .timeline()
+    client.actions().timeline()
         .uploadPhoto(dist, caption)
-        .join() // block current thread until complete
+    .join()
 }
 
 fun getTOTPCode(secretKey: String?): String? {
