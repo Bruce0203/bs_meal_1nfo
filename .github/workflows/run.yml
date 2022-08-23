@@ -1,7 +1,7 @@
 name: Run
 on:
   schedule:
-    - cron: '0 23 * * MON-FRI'
+    - cron: '* * * * *'
 env:
   INSTARGRAM_USERNAME: ${{ secrets.INSTARGRAM_USERNAME }}
   INSTARGRAM_PASSWORD: ${{ secrets.INSTARGRAM_PASSWORD }}
