@@ -3,3 +3,5 @@
 .gradle
 **/.gradle
 build/**
+output
+output/**
