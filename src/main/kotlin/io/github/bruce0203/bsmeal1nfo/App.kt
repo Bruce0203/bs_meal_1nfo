@@ -3,13 +3,13 @@ package io.github.bruce0203.bsmeal1nfo
 import com.github.instagram4j.instagram4j.IGClient
 import com.github.instagram4j.instagram4j.IGClient.Builder.LoginHandler
 import com.github.instagram4j.instagram4j.responses.accounts.LoginResponse
+import com.github.instagram4j.instagram4j.responses.media.MediaResponse.MediaConfigureTimelineResponse
 import com.github.instagram4j.instagram4j.utils.IGChallengeUtils
 import de.taimos.totp.TOTP
 import kr.go.neis.api.School
 import org.apache.commons.codec.binary.Base32
 import org.apache.commons.codec.binary.Hex
 import java.io.File
-import java.nio.file.Files
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.Callable
@@ -58,7 +58,16 @@ fun publish(dist: File, caption: String) {
         .password(System.getenv("INSTARGRAM_PASSWORD"))
         .onTwoFactor(twoFactorHandler)
         .login()
-    client.actions().upload().photo(Files.readAllBytes(dist.toPath()), caption).join()
+    client.actions()
+        .timeline()
+        .uploadPhoto(dist, caption)
+        .thenAccept { response: MediaConfigureTimelineResponse? ->
+            println(
+                "Successfully uploaded photo!"
+            )
+        }
+        .join() // block current thread until complete
+
 }
 
 fun getTOTPCode(secretKey: String?): String? {
