@@ -9,11 +9,14 @@ import de.taimos.totp.TOTP
 import kr.go.neis.api.School
 import org.apache.commons.codec.binary.Base32
 import org.apache.commons.codec.binary.Hex
+import java.awt.Color
+import java.awt.image.BufferedImage
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.Callable
 import javax.imageio.ImageIO
+
 
 fun main() {
     val png = File("output/dist.png")
@@ -80,6 +83,9 @@ fun getTOTPCode(secretKey: String?): String? {
 }
 
 fun pngToJpg(png: File, jpg: File) {
-    val img = ImageIO.read(png)
-    ImageIO.write(img, "jpg", jpg)
+    val beforeImg = ImageIO.read(png)
+    val afterImg = BufferedImage(beforeImg.width, beforeImg.height, BufferedImage.TYPE_INT_RGB)
+    afterImg.createGraphics().drawImage(beforeImg, 0, 0, Color.white, null)
+    ImageIO.write(afterImg, "jpg", jpg)
 }
+
