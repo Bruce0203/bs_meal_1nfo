@@ -5,9 +5,6 @@ import java.awt.Font
 import java.awt.GraphicsEnvironment
 import java.io.File
 import javax.imageio.ImageIO
-import javax.swing.JList
-import javax.swing.JOptionPane
-import javax.swing.JScrollPane
 
 
 object AddTextToImg {
@@ -35,8 +32,6 @@ object AddTextToImg {
         val font: Font = Font.createFont(Font.TRUETYPE_FONT, File("assets/font/font.ttf"))
         val ge = GraphicsEnvironment.getLocalGraphicsEnvironment()
         ge.registerFont(font)
-        val fonts: JList<*> = JList<Any?>(ge.availableFontFamilyNames)
-        JOptionPane.showMessageDialog(null, JScrollPane(fonts))
         return font
     }
 }
