@@ -19,12 +19,7 @@ import javax.imageio.ImageIO
 
 
 fun main() {
-    val png = File("output/dist.png")
-    AddTextToImg.execute(File("assets/image/image.png"), getMyLunch(), png)
-    val jpg = File("output/dist.jpg")
-    pngToJpg(png, jpg)
-    val caption = SimpleDateFormat("yyyy.MM.dd(${getWeek()})").format(Date())
-    publish(jpg, caption)
+    publish()
 }
 
 fun getWeek(): String {
@@ -51,7 +46,7 @@ fun removeNumbersInString(input: String): String {
     return strBuilder.toString()
 }
 
-fun publish(dist: File, caption: String) {
+fun publish() {
 
     val inputCode = Callable { getTOTPCode(System.getenv("OTP_SECRET")) }
     val twoFactorHandler = LoginHandler { client: IGClient, response: LoginResponse ->
@@ -66,11 +61,18 @@ fun publish(dist: File, caption: String) {
     val sec = System.currentTimeMillis() / 1000.0
     val takenAt = client.actions().timeline().feed().first().feed_items[0].taken_at
     val dayStart = sec - sec % 86400
-    if (dayStart < takenAt) return
-    println("skipped")
+    if (dayStart < takenAt) {
+        println("skipped")
+        return
+    }
+    val png = File("output/dist.png")
+    AddTextToImg.execute(File("assets/image/image.png"), getMyLunch(), png)
+    val jpg = File("output/dist.jpg")
+    pngToJpg(png, jpg)
+    val caption = SimpleDateFormat("yyyy.MM.dd(${getWeek()})").format(Date())
     client.actions()
         .timeline()
-        .uploadPhoto(dist, caption)
+        .uploadPhoto(jpg, caption)
         .thenAccept { response: MediaConfigureTimelineResponse? ->
             println(
                 "Successfully uploaded photo!"
