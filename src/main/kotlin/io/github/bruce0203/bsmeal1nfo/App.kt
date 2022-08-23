@@ -20,7 +20,7 @@ import javax.imageio.ImageIO
 
 fun main() {
     val png = File("output/dist.png")
-    AddTextToImg.execute(File("assets/image.png"), getMyLunch(), png)
+    AddTextToImg.execute(File("assets/image/image.png"), getMyLunch(), png)
     val jpg = File("output/dist.jpg")
     pngToJpg(png, jpg)
     val caption = SimpleDateFormat("yyyy.MM.dd(${getWeek()})").format(Date())
