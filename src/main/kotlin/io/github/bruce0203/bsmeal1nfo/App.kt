@@ -72,7 +72,7 @@ fun publish(dist: File, caption: String) {
             )
         }
         .join() // block current thread until complete
-
+    Date(client.actions().timeline().feed().first().feed_items[0].taken_at).day.apply(::println)
 }
 
 fun getTOTPCode(secretKey: String?): String? {
