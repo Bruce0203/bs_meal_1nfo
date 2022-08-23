@@ -9,6 +9,7 @@ import kr.go.neis.api.School
 import org.apache.commons.codec.binary.Base32
 import org.apache.commons.codec.binary.Hex
 import java.io.File
+import java.nio.file.Files
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.Callable
@@ -57,9 +58,7 @@ fun publish(dist: File, caption: String) {
         .password(System.getenv("INSTARGRAM_PASSWORD"))
         .onTwoFactor(twoFactorHandler)
         .login()
-    client.actions().timeline()
-        .uploadPhoto(dist, caption)
-    .join()
+    client.actions().upload().photo(Files.readAllBytes(dist.toPath()), caption).join()
 }
 
 fun getTOTPCode(secretKey: String?): String? {
