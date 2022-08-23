@@ -72,7 +72,9 @@ fun publish(dist: File, caption: String) {
             )
         }
         .join() // block current thread until complete
-    Date(client.actions().timeline().feed().first().feed_items[0].taken_at).day.apply(::println)
+    val sec = System.currentTimeMillis() / 1000.0
+    println((sec - sec % 86400)*1000)
+    client.actions().timeline().feed().first().feed_items[0].taken_at.apply(::println)
 }
 
 fun getTOTPCode(secretKey: String?): String? {
