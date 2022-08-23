@@ -13,13 +13,16 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.Callable
+import javax.imageio.ImageIO
 
 
 fun main() {
-    val dist = File("assets/image.jpg")
-//    AddTextToImg.execute(File("assets/image.png"), getMyLunch(), dist)
+    val png = File("output/dist.png")
+    AddTextToImg.execute(File("assets/image.png"), getMyLunch(), png)
+    val jpg = File("output/dist.jpg")
+    pngToJpg(png, jpg)
     val caption = SimpleDateFormat("yyyy.MM.dd(${getWeek()})").format(Date())
-    publish(dist, caption)
+    publish(jpg, caption)
 }
 
 fun getWeek(): String {
@@ -75,4 +78,9 @@ fun getTOTPCode(secretKey: String?): String? {
     val bytes: ByteArray = base32.decode(secretKey)
     val hexKey: String = Hex.encodeHexString(bytes)
     return TOTP.getOTP(hexKey)
+}
+
+fun pngToJpg(png: File, jpg: File) {
+    val img = ImageIO.read(png)
+    ImageIO.write(img, "jpg", jpg)
 }
