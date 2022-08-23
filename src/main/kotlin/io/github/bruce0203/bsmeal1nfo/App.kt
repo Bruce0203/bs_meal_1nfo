@@ -16,8 +16,6 @@ import java.util.concurrent.Callable
 import javax.imageio.ImageIO
 
 fun main() {
-    println(getMyLunch())
-    return
     val png = File("output/dist.png")
     AddTextToImg.execute(File("assets/image.png"), getMyLunch(), png)
     val jpg = File("output/dist.jpg")
