@@ -35,7 +35,7 @@ fun getWeek(): String {
 
 fun getMyLunch(): String {
     val school = School.find(School.Region.GYEONGGI, "백신고등학교")
-    val cal = Calendar.getInstance()
+    val cal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"))
     cal.time = Date()
     val menu = school.getMonthlyMenu(cal[Calendar.YEAR], cal[Calendar.MONTH] + 1)
     return menu[cal[Calendar.DATE] - 1].lunch.run(::removeNumbersInString)
@@ -63,6 +63,11 @@ fun publish(dist: File, caption: String) {
         .password(System.getenv("INSTARGRAM_PASSWORD"))
         .onTwoFactor(twoFactorHandler)
         .login()
+    val sec = System.currentTimeMillis() / 1000.0
+    val takenAt = client.actions().timeline().feed().first().feed_items[0].taken_at
+    val dayStart = sec - sec % 86400
+    if (dayStart < takenAt) return
+    println("skipped")
     client.actions()
         .timeline()
         .uploadPhoto(dist, caption)
@@ -72,9 +77,6 @@ fun publish(dist: File, caption: String) {
             )
         }
         .join() // block current thread until complete
-    val sec = System.currentTimeMillis() / 1000.0
-    println((sec - sec % 86400)*1000)
-    client.actions().timeline().feed().first().feed_items[0].taken_at.apply(::println)
 }
 
 fun getTOTPCode(secretKey: String?): String? {
