@@ -16,8 +16,8 @@ import java.util.concurrent.Callable
 
 
 fun main() {
-    val dist = File("output/dist.png")
-    AddTextToImg.execute(File("assets/image.png"), getMyLunch(), dist)
+    val dist = File("output/dist.jpg")
+//    AddTextToImg.execute(File("assets/image.png"), getMyLunch(), dist)
     val caption = SimpleDateFormat("yyyy.MM.dd(${getWeek()})").format(Date())
     publish(dist, caption)
 }
