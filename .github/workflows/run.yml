@@ -2,7 +2,7 @@ name: Run
 on:
   push:
   schedule:
-    - cron: '50 22 * * 1-5'
+    - cron: '52 22 * * 1-5'
 env:
   INSTARGRAM_USERNAME: ${{ secrets.INSTARGRAM_USERNAME }}
   INSTARGRAM_PASSWORD: ${{ secrets.INSTARGRAM_PASSWORD }}
