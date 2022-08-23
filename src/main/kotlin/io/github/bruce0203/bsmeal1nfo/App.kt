@@ -48,14 +48,9 @@ fun removeNumbersInString(input: String): String {
 
 fun publish(dist: File, caption: String) {
 
-    val inputCode = Callable {
-        getTOTPCode(System.getenv("OTP_SECRET"))
-    }
-// handler for two factor login
-    val twoFactorHandler = LoginHandler { client: IGClient?, response: LoginResponse? ->
-        IGChallengeUtils.resolveTwoFactor(
-            client!!, response!!, inputCode
-        )
+    val inputCode = Callable { getTOTPCode(System.getenv("OTP_SECRET")) }
+    val twoFactorHandler = LoginHandler { client: IGClient, response: LoginResponse ->
+        IGChallengeUtils.resolveTwoFactor(client, response, inputCode)
     }
 
     val client = IGClient.builder()
@@ -66,10 +61,6 @@ fun publish(dist: File, caption: String) {
     client.actions()
         .timeline()
         .uploadPhoto(dist, caption)
-        .thenAccept { response: MediaConfigureTimelineResponse? ->
-            println("Successfully uploaded photo!")
-            println(response)
-        }
         .join() // block current thread until complete
 }
 
