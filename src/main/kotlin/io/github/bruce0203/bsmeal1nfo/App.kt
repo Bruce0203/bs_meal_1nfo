@@ -64,6 +64,7 @@ fun publish() {
     val cal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"))
     cal.time = Date()
     println(cal.timeZone.displayName)
+    println(cal)
     println(takenAt)
     println(sec)
     println(dayStart)
