@@ -58,9 +58,9 @@ fun publish() {
         .password(System.getenv("INSTARGRAM_PASSWORD"))
         .onTwoFactor(twoFactorHandler)
         .login()
-    val sec = System.currentTimeMillis() % 1000.0
+    val sec = (System.currentTimeMillis() % 1000.0).toInt()
     val takenAt = client.actions().timeline().feed().first().feed_items[0].taken_at
-    val dayStart = sec - sec % 86400
+    val dayStart = sec - (sec % 86400)
     println(takenAt)
     println(sec)
     println(dayStart)
