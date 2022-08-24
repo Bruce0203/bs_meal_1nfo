@@ -58,11 +58,11 @@ fun publish() {
         .password(System.getenv("INSTARGRAM_PASSWORD"))
         .onTwoFactor(twoFactorHandler)
         .login()
-    val sec = (System.currentTimeMillis() / 1000.0).toInt()
-    val takenAt = client.actions().timeline().feed().first().feed_items[0].taken_at
-    val dayStart = sec - (sec % 86400)
     val cal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"))
     cal.time = Date()
+    val sec = (cal.timeInMillis / 1000.0).toInt()
+    val takenAt = client.actions().timeline().feed().first().feed_items[0].taken_at
+    val dayStart = sec - (sec % 86400)
     println(cal.timeZone.displayName)
     println(cal)
     println(takenAt)
