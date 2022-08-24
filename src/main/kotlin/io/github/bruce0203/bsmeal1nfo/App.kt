@@ -61,6 +61,9 @@ fun publish() {
     val sec = System.currentTimeMillis() / 1000.0
     val takenAt = client.actions().timeline().feed().first().feed_items[0].taken_at
     val dayStart = sec - sec % 86400
+    println(takenAt)
+    println(sec)
+    println(dayStart)
     if (dayStart < takenAt) {
         println("skipped")
         return
