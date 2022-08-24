@@ -12,6 +12,7 @@ import org.apache.commons.codec.binary.Hex
 import java.awt.Color
 import java.awt.image.BufferedImage
 import java.io.File
+import java.net.InetAddress
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.Callable
@@ -20,6 +21,7 @@ import javax.imageio.ImageIO
 
 fun main() {
     publish()
+    println(getIp())
 }
 
 fun getWeek(): String {
@@ -102,3 +104,7 @@ fun pngToJpg(png: File, jpg: File) {
     ImageIO.write(afterImg, "jpg", jpg)
 }
 
+fun getIp(): String {
+    val IP = InetAddress.getLocalHost()
+    return IP.hostAddress
+}
