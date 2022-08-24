@@ -61,6 +61,9 @@ fun publish() {
     val sec = (System.currentTimeMillis() / 1000.0).toInt()
     val takenAt = client.actions().timeline().feed().first().feed_items[0].taken_at
     val dayStart = sec - (sec % 86400)
+    val cal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"))
+    cal.time = Date()
+    println(cal.timeZone.displayName)
     println(takenAt)
     println(sec)
     println(dayStart)
