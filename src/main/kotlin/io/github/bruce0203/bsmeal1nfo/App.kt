@@ -31,7 +31,7 @@ fun main() {
 
 private const val NINE_HOUR = 32400
 private const val ONE_DAY = 86400
-fun getLeftNextDay() = cal.timeInMillis + ONE_DAY - (cal.timeInMillis % ONE_DAY) + NINE_HOUR
+fun getLeftNextDay() = cal.timeInMillis + ONE_DAY*1000 - (cal.timeInMillis % ONE_DAY*1000) + NINE_HOUR*1000
 
 fun getWeek(): String {
     val cal = Calendar.getInstance()
