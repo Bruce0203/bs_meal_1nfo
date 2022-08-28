@@ -24,3 +24,7 @@ dependencies {
     api("commons-codec:commons-codec:1.10")
     api("com.google.zxing:javase:3.2.1")
 }
+
+tasks.register("stage") {
+    dependsOn(tasks.run)
+}
