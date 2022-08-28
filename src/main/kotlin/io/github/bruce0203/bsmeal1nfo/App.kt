@@ -12,17 +12,26 @@ import org.apache.commons.codec.binary.Hex
 import java.awt.Color
 import java.awt.image.BufferedImage
 import java.io.File
-import java.net.InetAddress
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.Callable
 import javax.imageio.ImageIO
 
+val cal get() = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"))!!
 
 fun main() {
-    publish()
-    println(getIp())
+    while(true) {
+        val leftNextDay = getLeftNextDay()
+        println("${Date(leftNextDay)}")
+        Thread.sleep(leftNextDay)
+        publish()
+    }
 }
+
+
+private const val NINE_HOUR = 32400
+private const val ONE_DAY = 86400
+fun getLeftNextDay() = cal.timeInMillis + ONE_DAY - (cal.timeInMillis % ONE_DAY) + NINE_HOUR
 
 fun getWeek(): String {
     val cal = Calendar.getInstance()
@@ -32,7 +41,6 @@ fun getWeek(): String {
 
 fun getMyLunch(): String {
     val school = School.find(School.Region.GYEONGGI, "백신고등학교")
-    val cal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"))
     cal.time = Date()
     val menu = school.getMonthlyMenu(cal[Calendar.YEAR], cal[Calendar.MONTH] + 1)
     return menu[cal[Calendar.DATE] - 1].lunch.run(::removeNumbersInString)
@@ -64,7 +72,7 @@ fun publish() {
     cal.time = Date()
     val sec = (cal.timeInMillis / 1000.0).toInt()
     val takenAt = client.actions().timeline().feed().first().feed_items[0].taken_at
-    val dayStart = sec - (sec % 86400)
+    val dayStart = sec - (sec % ONE_DAY)
     println(cal.timeZone.displayName)
     println(cal)
     println(takenAt)
@@ -102,9 +110,4 @@ fun pngToJpg(png: File, jpg: File) {
     val afterImg = BufferedImage(beforeImg.width, beforeImg.height, BufferedImage.TYPE_INT_RGB)
     afterImg.createGraphics().drawImage(beforeImg, 0, 0, Color.white, null)
     ImageIO.write(afterImg, "jpg", jpg)
-}
-
-fun getIp(): String {
-    val IP = InetAddress.getLocalHost()
-    return IP.hostAddress
 }
