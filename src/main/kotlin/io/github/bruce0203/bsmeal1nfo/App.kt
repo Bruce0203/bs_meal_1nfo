@@ -25,7 +25,7 @@ fun main() {
         val leftNextDay = getLeftNextDay()
         println("$leftNextDay")
         println("${Date(leftNextDay)}")
-        Thread.sleep(leftNextDay)
+        Thread.sleep(leftNextDay - currentTimeMillis())
         publish()
     }
 }
