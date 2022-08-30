@@ -9,10 +9,11 @@ env:
   OTP_SECRET: ${{ secrets.OTP_SECRET }}
 jobs:
   gradle:
-    strategy:
-      matrix:
-        os: [ ubuntu-latest ]
-    runs-on: ${{ matrix.os }}
+#    strategy:
+#      matrix:
+#        os: [ ubuntu-latest ]
+#    runs-on: ${{ matrix.os }}
+    runs-on: self-hosted
     steps:
       - name: checkout
         uses: actions/checkout@v2
