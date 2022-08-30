@@ -12,6 +12,7 @@ import org.apache.commons.codec.binary.Hex
 import java.awt.Color
 import java.awt.image.BufferedImage
 import java.io.File
+import java.lang.System.currentTimeMillis
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.Callable
@@ -22,6 +23,7 @@ val cal get() = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"))!!
 fun main() {
     while(true) {
         val leftNextDay = getLeftNextDay()
+        println("$leftNextDay")
         println("${Date(leftNextDay)}")
         Thread.sleep(leftNextDay)
         publish()
@@ -31,7 +33,7 @@ fun main() {
 
 private const val NINE_HOUR = 32400
 private const val ONE_DAY = 86400
-fun getLeftNextDay() = cal.timeInMillis + ONE_DAY*1000 - (cal.timeInMillis % ONE_DAY*1000) + NINE_HOUR*1000
+fun getLeftNextDay() = currentTimeMillis() + ONE_DAY*1000 - (currentTimeMillis() % ONE_DAY*1000) + NINE_HOUR*1000
 
 fun getWeek(): String {
     val cal = Calendar.getInstance()
