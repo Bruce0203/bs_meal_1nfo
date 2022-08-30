@@ -31,7 +31,7 @@ fun main() {
 }
 
 
-private const val NINE_HOUR = 82800//32400
+private const val NINE_HOUR = 32400
 private const val ONE_DAY = 86400
 fun getLeftNextDay(): Long {
     val milliSec = ((currentTimeMillis()) / 1000.0).toInt()
