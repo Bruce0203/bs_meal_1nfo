@@ -22,11 +22,11 @@ val cal get() = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"))!!
 
 fun main() {
     while(true) {
+        publish()
         val leftNextDay = getLeftNextDay()
         println("$leftNextDay")
         println("${Date(leftNextDay)}")
         Thread.sleep(leftNextDay - currentTimeMillis())
-        publish()
     }
 }
 
