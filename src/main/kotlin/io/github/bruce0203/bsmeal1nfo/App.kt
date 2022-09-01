@@ -13,6 +13,7 @@ import java.awt.Color
 import java.awt.image.BufferedImage
 import java.io.File
 import java.lang.System.currentTimeMillis
+import java.net.InetAddress
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.Callable
@@ -21,6 +22,7 @@ import javax.imageio.ImageIO
 val cal get() = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"))!!
 
 fun main() {
+    println(InetAddress.getLocalHost())
     while(true) {
         publish()
         val leftNextDay = getLeftNextDay()
