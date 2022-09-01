@@ -22,14 +22,16 @@ import javax.imageio.ImageIO
 val cal get() = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"))!!
 
 fun main() {
+    val IP = InetAddress.getLocalHost()
+    System.out.println("IP of my system is := "+IP.getHostAddress());
     println(InetAddress.getLocalHost())
-    while(true) {
-        publish()
-        val leftNextDay = getLeftNextDay()
-        println("$leftNextDay")
-        println("${Date(leftNextDay)}")
-        Thread.sleep(leftNextDay - currentTimeMillis())
-    }
+//    while(true) {
+//        publish()
+//        val leftNextDay = getLeftNextDay()
+//        println("$leftNextDay")
+//        println("${Date(leftNextDay)}")
+//        Thread.sleep(leftNextDay - currentTimeMillis())
+//    }
 }
 
 
