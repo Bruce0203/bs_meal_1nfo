@@ -1,5 +1,6 @@
 package io.github.bruce0203.bsmeal1nfo
 
+import IPGET
 import com.github.instagram4j.instagram4j.IGClient
 import com.github.instagram4j.instagram4j.IGClient.Builder.LoginHandler
 import com.github.instagram4j.instagram4j.responses.accounts.LoginResponse
@@ -22,9 +23,7 @@ import javax.imageio.ImageIO
 val cal get() = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"))!!
 
 fun main() {
-    val IP = InetAddress.getLocalHost()
-    System.out.println("IP of my system is := "+IP.getHostAddress());
-    println(InetAddress.getLocalHost())
+    println(IPGET.solution())
 //    while(true) {
 //        publish()
 //        val leftNextDay = getLeftNextDay()
