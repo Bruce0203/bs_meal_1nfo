@@ -1,5 +1,5 @@
 name: Run
-on: [ push ]
+on: push
 jobs:
   gradle:
 #    strategy:
