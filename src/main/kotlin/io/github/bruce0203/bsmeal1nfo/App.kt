@@ -45,7 +45,7 @@ fun getWeek(): String {
 }
 
 fun getMyLunch(): String {
-    val school = School.find(School.Region.GYEONGGI, "백신고등학교")
+    val school = School.find(School.Region.valueOf(System.getenv("SCHOOL_REGION")), System.getenv("SCHOOL_NAME"))
     cal.time = Date()
     val menu = school.getMonthlyMenu(cal[Calendar.YEAR], cal[Calendar.MONTH] + 1)
     return menu[cal[Calendar.DATE] - 1].lunch.run(::removeNumbersInString)
