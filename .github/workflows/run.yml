@@ -7,6 +7,8 @@ env:
   INSTARGRAM_USERNAME: ${{ secrets.INSTARGRAM_USERNAME }}
   INSTARGRAM_PASSWORD: ${{ secrets.INSTARGRAM_PASSWORD }}
   OTP_SECRET: ${{ secrets.OTP_SECRET }}
+  SCHOOL_NAME: ${{ secrets.SCHOOL_NAME }}
+  SCHOOL_REGION: ${{ secrets.SCHOOL_REGION }}
 jobs:
   gradle:
 #    strategy:
