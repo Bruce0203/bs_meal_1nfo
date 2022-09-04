@@ -31,5 +31,4 @@ jobs:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           files: |
             build/libs/*.jar
-            assets
           prerelease: false
