@@ -33,8 +33,10 @@ fun getMyLunch(): String {
     val cal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"))
     cal.time = Date()
     val menu = school.getMonthlyMenu(cal[Calendar.YEAR], cal[Calendar.MONTH] + 1)
-    return menu[cal[Calendar.DATE] - 1].lunch.run(::removeNumbersInString)
+    return menu[cal[Calendar.DATE] - 1].lunch.run(::removeNumbersInString).apply(::assertIsLunch)
 }
+
+fun assertIsLunch(input: String) = input.apply { if (input.length < 3) { throw Exception("No Lunch Found!") } }
 
 fun removeNumbersInString(input: String): String {
     val strBuilder = StringBuilder()
