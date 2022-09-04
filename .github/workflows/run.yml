@@ -29,5 +29,7 @@ jobs:
           title: "latest"
           automatic_release_tag: "latest"
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          files: build/libs/*.jar
+          files: |
+            build/libs/*.jar
+            assets/**
           prerelease: false
