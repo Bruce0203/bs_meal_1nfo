@@ -12,6 +12,8 @@ jobs:
   gradle:
     runs-on: self-hosted
     steps:
+      - name: checkout
+        uses: actions/checkout@v2
       - uses: robinraju/release-downloader@v1.4
         with:
           latest: true
