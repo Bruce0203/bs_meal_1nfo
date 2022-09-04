@@ -18,7 +18,7 @@ jobs:
           fileName: "*.jar"
           tarBall: false
           zipBall: false
-          out-file-path: "$GITHUB_WORKSPACE/download"
+          out-file-path: "${{ github.workspace }}/download/"
           token: "${{ secrets.GITHUB_TOKEN }}"
       - uses: actions/setup-java@v3
         with:
@@ -27,6 +27,5 @@ jobs:
 
       - name: Run jar
         run: |
-          cd download
           ARTIFACT=$(find . -type f -name "*.jar")
           java -jar $ARTIFACT
