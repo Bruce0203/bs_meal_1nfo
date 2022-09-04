@@ -79,7 +79,7 @@ fun publish() {
         return
     }
     val png = File("output/dist.png")
-    AddTextToImg.execute(File("image/image.png"), lunch, png)
+    AddTextToImg.execute(File("assets/image/image.png"), lunch, png)
     val jpg = File("output/dist.jpg")
     pngToJpg(png, jpg)
     val caption = SimpleDateFormat("yyyy.MM.dd(${getWeek()})").format(Date())

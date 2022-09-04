@@ -34,7 +34,7 @@ object AddTextToImg {
     }
 
     fun getFont(): Font {
-        val font: Font = Font.createFont(Font.TRUETYPE_FONT, File("font/font.ttf"))
+        val font: Font = Font.createFont(Font.TRUETYPE_FONT, File("assets/font/font.ttf"))
         val ge = GraphicsEnvironment.getLocalGraphicsEnvironment()
         ge.registerFont(font)
         return font
