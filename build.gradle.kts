@@ -8,7 +8,6 @@ buildscript {
     }
 }
 plugins {
-    application
     kotlin("jvm") version "1.6.10"
 }
 apply(plugin = "com.github.johnrengelman.shadow")
@@ -24,13 +23,8 @@ tasks.withType<Jar> {
     }
 }
 
-application {
-    mainClass.set("io.github.bruce0203.bsmeal1nfo.AppKt")
-}
-
 repositories {
     mavenCentral()
-
 }
 
 dependencies {
@@ -43,10 +37,6 @@ dependencies {
     api("de.taimos:totp:1.0")
     api("commons-codec:commons-codec:1.10")
     api("com.google.zxing:javase:3.2.1")
-}
-
-tasks.register("stage") {
-    dependsOn(tasks.run)
 }
 
 sourceSets.getByName("main") {
