@@ -4,6 +4,7 @@ import java.awt.Color
 import java.awt.Font
 import java.awt.GraphicsEnvironment
 import java.io.File
+import java.util.Properties
 import javax.imageio.ImageIO
 
 
@@ -16,11 +17,15 @@ object AddTextToImg {
         //get the Graphics object
         val g = image.graphics
         //set font
-        g.color = Color.BLACK
-        g.font = getFont().deriveFont(110f)
-        //display the text at the coordinates(x=50, y=150)
+        val prop = Properties()
+        prop.load(File("config/drawing.properties").bufferedReader())
+        g.color = hex2Rgb(prop["draw-color"].toString())
+        g.font = getFont().deriveFont(prop["draw-font-size"].toString().toFloat())
         txt.split("\n").forEachIndexed { ind, str ->
-            g.drawString(str, 200, 350 + ind * 130)
+            g.drawString(str,
+                prop["draw-x"].toString().toInt(),
+                prop["draw-y"].toString().toInt()
+                    + ind * prop["draw-leading"].toString().toInt())
         }
         g.dispose()
         //write the image
@@ -29,9 +34,21 @@ object AddTextToImg {
     }
 
     fun getFont(): Font {
-        val font: Font = Font.createFont(Font.TRUETYPE_FONT, File("assets/font/font.ttf"))
+        val font: Font = Font.createFont(Font.TRUETYPE_FONT, File("font/font.ttf"))
         val ge = GraphicsEnvironment.getLocalGraphicsEnvironment()
         ge.registerFont(font)
         return font
     }
+
+    @JvmStatic
+    fun hex2Rgb(colorStr: String): Color {
+        var s = colorStr
+        if (!s.startsWith("#")) s = "#$colorStr"
+        return Color.getHSBColor(
+            Integer.valueOf( s.substring( 1, 3 ), 16 ).toFloat(),
+            Integer.valueOf( s.substring( 3, 5 ), 16 ).toFloat(),
+            Integer.valueOf( s.substring( 5, 7 ), 16 ).toFloat()
+        )
+    }
+
 }

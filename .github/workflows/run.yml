@@ -1,20 +1,12 @@
-name: Run
-on:
-  schedule:
-    - cron: '0 */6 * * *'
-env:
-  INSTARGRAM_USERNAME: ${{ secrets.INSTARGRAM_USERNAME }}
-  INSTARGRAM_PASSWORD: ${{ secrets.INSTARGRAM_PASSWORD }}
-  OTP_SECRET: ${{ secrets.OTP_SECRET }}
-  SCHOOL_NAME: ${{ secrets.SCHOOL_NAME }}
-  SCHOOL_REGION: ${{ secrets.SCHOOL_REGION }}
+name: Build
+on: push
 jobs:
   gradle:
-#    strategy:
-#      matrix:
-#        os: [ ubuntu-latest ]
-#    runs-on: ${{ matrix.os }}
-    runs-on: self-hosted
+    strategy:
+      matrix:
+        os: [ ubuntu-latest ]
+    runs-on: ${{ matrix.os }}
+#    runs-on: self-hosted
     steps:
       - name: checkout
         uses: actions/checkout@v2
@@ -29,4 +21,13 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Execute Gradle build
-        run: ./gradlew run
+        run: ./gradlew shadowJar
+
+      - name: release
+        uses: marvinpinto/action-automatic-releases@latest
+        with:
+          title: "latest"
+          automatic_release_tag: "latest"
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          files: build/libs/*.jar
+          prerelease: false

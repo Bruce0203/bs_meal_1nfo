@@ -29,7 +29,7 @@ fun getWeek(): String {
 }
 
 fun getMyLunch(): String {
-    val school = School.find(School.Region.GYEONGGI, "백신고등학교")
+    val school = School.find(School.Region.valueOf(System.getenv("SCHOOL_REGION")), System.getenv("SCHOOL_NAME"))
     val cal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"))
     cal.time = Date()
     val menu = school.getMonthlyMenu(cal[Calendar.YEAR], cal[Calendar.MONTH] + 1)
@@ -79,7 +79,7 @@ fun publish() {
         return
     }
     val png = File("output/dist.png")
-    AddTextToImg.execute(File("assets/image/image.png"), lunch, png)
+    AddTextToImg.execute(File("image/image.png"), lunch, png)
     val jpg = File("output/dist.jpg")
     pngToJpg(png, jpg)
     val caption = SimpleDateFormat("yyyy.MM.dd(${getWeek()})").format(Date())

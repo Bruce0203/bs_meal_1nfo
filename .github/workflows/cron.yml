@@ -1,0 +1,31 @@
+name: Scheduled run
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+env:
+  INSTARGRAM_USERNAME: ${{ secrets.INSTARGRAM_USERNAME }}
+  INSTARGRAM_PASSWORD: ${{ secrets.INSTARGRAM_PASSWORD }}
+  OTP_SECRET: ${{ secrets.OTP_SECRET }}
+  SCHOOL_NAME: ${{ secrets.SCHOOL_NAME }}
+  SCHOOL_REGION: ${{ secrets.SCHOOL_REGION }}
+jobs:
+  gradle:
+    runs-on: self-hosted
+    steps:
+      - uses: robinraju/release-downloader@v1.4
+        with:
+          latest: true
+          fileName: "*.jar"
+          tarBall: false
+          zipBall: false
+          out-file-path: "$GITHUB_WORKSPACE/"
+          token: "${{ secrets.GITHUB_TOKEN }}"
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu' # See 'Supported distributions' for available options
+          java-version: '11'
+
+      - name: Run jar
+        run: |
+          ARTIFACT=$(find . -type f -name "*.jar")
+          java -jar $ARTIFACT

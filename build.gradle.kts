@@ -1,7 +1,27 @@
 val kotlin_version = "1.6.10"
+buildscript {
+    repositories {
+        gradlePluginPortal()
+    }
+    dependencies {
+        classpath("gradle.plugin.com.github.johnrengelman:shadow:7.1.2")
+    }
+}
 plugins {
     application
     kotlin("jvm") version "1.6.10"
+}
+apply(plugin = "com.github.johnrengelman.shadow")
+tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
+    archiveFileName.set("${rootProject.name}.jar")
+}
+
+tasks.withType<Jar> {
+    manifest {
+        attributes(mapOf(
+            "Main-Class" to "io.github.bruce0203.bsmeal1nfo.AppKt"
+        ))
+    }
 }
 
 application {
@@ -27,4 +47,8 @@ dependencies {
 
 tasks.register("stage") {
     dependsOn(tasks.run)
+}
+
+sourceSets.getByName("main") {
+    resources.srcDir("assets")
 }
