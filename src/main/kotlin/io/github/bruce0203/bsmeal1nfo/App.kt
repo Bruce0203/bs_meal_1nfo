@@ -51,6 +51,7 @@ fun removeNumbersInString(input: String): String {
 }
 
 fun publish() {
+    val lunch = getMyLunch()
 
     val inputCode = Callable { getTOTPCode(System.getenv("OTP_SECRET")) }
     val twoFactorHandler = LoginHandler { client: IGClient, response: LoginResponse ->
@@ -67,17 +68,18 @@ fun publish() {
     val sec = (cal.timeInMillis / 1000.0).toInt()
     val takenAt = client.actions().timeline().feed().first().feed_items[0].taken_at
     val dayStart = sec - (sec % 86400)
-    println(cal.timeZone.displayName)
-    println(cal)
-    println(takenAt)
-    println(sec)
-    println(dayStart)
     if (dayStart < takenAt) {
-        println("skipped")
+        println(
+            """
+                    --------------------------
+                   "Skipped due to already exist!" 
+                    --------------------------
+                """
+        )
         return
     }
     val png = File("output/dist.png")
-    AddTextToImg.execute(File("assets/image/image.png"), getMyLunch(), png)
+    AddTextToImg.execute(File("assets/image/image.png"), lunch, png)
     val jpg = File("output/dist.jpg")
     pngToJpg(png, jpg)
     val caption = SimpleDateFormat("yyyy.MM.dd(${getWeek()})").format(Date())
@@ -86,7 +88,11 @@ fun publish() {
         .uploadPhoto(jpg, caption)
         .thenAccept { response: MediaConfigureTimelineResponse? ->
             println(
-                "Successfully uploaded photo!"
+                """
+                    --------------------------
+                   "Successfully uploaded photo!" 
+                    --------------------------
+                """
             )
         }
         .join() // block current thread until complete
