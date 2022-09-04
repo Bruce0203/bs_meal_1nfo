@@ -46,6 +46,8 @@ fun removeNumbersInString(input: String): String {
                 .indexOfFirst { Character.isDigit(it) || it == '(' }).run { if (this <= 0) txt.length else this }) }
         .forEach { strBuilder.append(it) ; strBuilder.append("\n")}
     return strBuilder.toString()
+        .replace("+", "")
+        .replace("-", "")
 }
 
 fun publish() {
