@@ -12,30 +12,14 @@ import org.apache.commons.codec.binary.Hex
 import java.awt.Color
 import java.awt.image.BufferedImage
 import java.io.File
-import java.lang.System.currentTimeMillis
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.Callable
 import javax.imageio.ImageIO
 
-val cal get() = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"))!!
 
 fun main() {
-    while(true) {
-        publish()
-        val leftNextDay = getLeftNextDay()
-        println("$leftNextDay")
-        println("${Date(leftNextDay)}")
-        Thread.sleep(leftNextDay - currentTimeMillis())
-    }
-}
-
-
-private const val NINE_HOUR = 32400
-private const val ONE_DAY = 86400
-fun getLeftNextDay(): Long {
-    val milliSec = ((currentTimeMillis()) / 1000.0).toInt()
-    return ((milliSec + ONE_DAY - (milliSec % (ONE_DAY))) * 1000L) - cal.timeZone.getOffset(currentTimeMillis()) + NINE_HOUR*1000
+    publish()
 }
 
 fun getWeek(): String {
@@ -45,7 +29,8 @@ fun getWeek(): String {
 }
 
 fun getMyLunch(): String {
-    val school = School.find(School.Region.valueOf(System.getenv("SCHOOL_REGION")), System.getenv("SCHOOL_NAME"))
+    val school = School.find(School.Region.GYEONGGI, "백신고등학교")
+    val cal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"))
     cal.time = Date()
     val menu = school.getMonthlyMenu(cal[Calendar.YEAR], cal[Calendar.MONTH] + 1)
     return menu[cal[Calendar.DATE] - 1].lunch.run(::removeNumbersInString)
@@ -77,7 +62,7 @@ fun publish() {
     cal.time = Date()
     val sec = (cal.timeInMillis / 1000.0).toInt()
     val takenAt = client.actions().timeline().feed().first().feed_items[0].taken_at
-    val dayStart = sec - (sec % ONE_DAY)
+    val dayStart = sec - (sec % 86400)
     println(cal.timeZone.displayName)
     println(cal)
     println(takenAt)
