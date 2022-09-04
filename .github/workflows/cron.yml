@@ -27,5 +27,6 @@ jobs:
 
       - name: Run jar
         run: |
+          cd download
           ARTIFACT=$(find . -type f -name "*.jar")
           java -jar $ARTIFACT
