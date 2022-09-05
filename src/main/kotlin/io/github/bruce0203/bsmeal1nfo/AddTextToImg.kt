@@ -18,7 +18,7 @@ object AddTextToImg {
         val g = image.graphics
         //set font
         val prop = Properties()
-        prop.load(File("config/drawing.properties").bufferedReader())
+        prop.load(File("assets/config/drawing.properties").bufferedReader())
         g.color = hex2Rgb(prop["draw-color"].toString())
         g.font = getFont().deriveFont(prop["draw-font-size"].toString().toFloat())
         txt.split("\n").forEachIndexed { ind, str ->
