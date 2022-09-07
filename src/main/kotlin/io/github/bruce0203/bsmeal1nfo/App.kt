@@ -67,7 +67,7 @@ fun publish() {
     cal.time = Date()
     val sec = (cal.timeInMillis / 1000.0).toInt()
     val takenAt = client.actions().timeline().feed().first().feed_items[0].taken_at
-    val dayStart = sec - (sec % 86400)
+    val dayStart = sec - (sec % 86400) + (cal.timeZone.getOffset(cal.timeInMillis) / 1000.0)
     if (dayStart < takenAt) {
         println(
             """
