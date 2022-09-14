@@ -35,6 +35,7 @@ A: `assets` 폴더에서 폰트, 이미지, 글씨 스타일을 설정할 수 �
 # 설치
 
 - 이 repo를 fork 하세요
+- fork한 GitHub Actions를 활성화하고 아무거나 push하세요
 - 인스타그램 크리에이터, 혹은 비즈니스 계정을 만드세요
 - `env.example` 파일을 참고해서, GitHub에서 Settings의 Security 카테고리의 Secrets > Actions 를 설정하세요
 - 마지막으로, GitHub Actions Runner 프로그램을 당신의 컴퓨터에 24시간 작동시켜두세요!
