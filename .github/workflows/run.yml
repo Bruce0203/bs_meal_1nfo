@@ -1,5 +1,5 @@
 name: Build
-on: [ push, fork ]
+on: [ push ]
 jobs:
   gradle:
     strategy:
