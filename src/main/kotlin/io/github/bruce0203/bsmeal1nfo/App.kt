@@ -48,6 +48,9 @@ fun removeNumbersInString(input: String): String {
     return strBuilder.toString()
         .replace("+", "")
         .replace("-", "")
+        .replace("*", "")
+        .replace(";", "")
+        .replace("&", "")
 }
 
 fun publish() {
