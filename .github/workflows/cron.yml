@@ -1,7 +1,8 @@
 name: Scheduled run
 on:
+  workflow_dispatch:
   schedule:
-    - cron: '0 */6 * * *'
+    - cron: "0 */6 * * *"
 env:
   INSTARGRAM_USERNAME: ${{ secrets.INSTARGRAM_USERNAME }}
   INSTARGRAM_PASSWORD: ${{ secrets.INSTARGRAM_PASSWORD }}
@@ -24,8 +25,8 @@ jobs:
           token: "${{ secrets.GITHUB_TOKEN }}"
       - uses: actions/setup-java@v3
         with:
-          distribution: 'zulu'
-          java-version: '11'
+          distribution: "zulu"
+          java-version: "11"
 
       - name: Run jar
         run: |
