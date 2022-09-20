@@ -1,0 +1,30 @@
+package io.github.bruce0203.bsmeal1nfo
+
+import com.github.instagram4j.instagram4j.IGClient
+import com.github.instagram4j.instagram4j.responses.accounts.LoginResponse
+import com.github.instagram4j.instagram4j.utils.IGChallengeUtils
+import de.taimos.totp.TOTP
+import org.apache.commons.codec.binary.Base32
+import org.apache.commons.codec.binary.Hex
+import java.util.concurrent.Callable
+
+fun getTOTPCode(secretKey: String?): String? {
+    val base32 = Base32()
+    val bytes: ByteArray = base32.decode(secretKey)
+    val hexKey: String = Hex.encodeHexString(bytes)
+    return TOTP.getOTP(hexKey)
+}
+
+fun login(): IGClient {
+    val inputCode = Callable { getTOTPCode(System.getenv("OTP_SECRET")) }
+    val twoFactorHandler = IGClient.Builder.LoginHandler { client: IGClient, response: LoginResponse ->
+        IGChallengeUtils.resolveTwoFactor(client, response, inputCode)
+    }
+
+    val client = IGClient.builder()
+        .username(System.getenv("INSTARGRAM_USERNAME"))
+        .password(System.getenv("INSTARGRAM_PASSWORD"))
+        .onTwoFactor(twoFactorHandler)
+        .login()
+    return client
+}
