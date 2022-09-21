@@ -20,10 +20,10 @@ fun publish() {
     val client = login()
     val cal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"))
     cal.time = Date()
-    val sec = (cal.timeInMillis / 1000.0).toInt()
-    val timeZoneOffset = (cal.timeZone.getOffset(cal.timeInMillis) / 1000.0)
-    val takenAt = client.actions().timeline().feed().firstOrNull()?.feed_items?.get(0)?.taken_at?: 0L
-    val dayStart = sec - (sec % 86400) + timeZoneOffset
+    val timeZoneOffset = (cal.timeZone.getOffset(cal.timeInMillis) / 1000.0).toLong()
+    val sec = (cal.timeInMillis / 1000.0).toInt() + timeZoneOffset
+    val takenAt = (client.actions().timeline().feed().firstOrNull()?.feed_items?.get(0)?.taken_at?: 0L) + timeZoneOffset
+    val dayStart = sec - (sec % 86400)
     println("""
     ---------debugMsg---------
     --------------------------
