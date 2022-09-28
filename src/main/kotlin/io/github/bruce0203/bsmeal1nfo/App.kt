@@ -4,8 +4,10 @@ import com.github.instagram4j.instagram4j.responses.media.MediaResponse.MediaCon
 import java.text.SimpleDateFormat
 import java.util.*
 
+var isRunCold = false
 
-fun main() {
+fun main(args: Array<String>) {
+    isRunCold = args.getOrElse(0) { "false" }.toBoolean()
     publish()
 }
 
@@ -40,7 +42,7 @@ fun publish() {
                     --------------------------
                 """
         )
-        return
+        if (!isRunCold) return
     }
     val caption = SimpleDateFormat("yyyy.MM.dd(${getWeek()})").format(Date())
     client.actions()
