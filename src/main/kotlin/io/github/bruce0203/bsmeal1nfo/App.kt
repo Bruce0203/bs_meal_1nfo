@@ -3,6 +3,7 @@ package io.github.bruce0203.bsmeal1nfo
 import com.github.instagram4j.instagram4j.responses.media.MediaResponse.MediaConfigureTimelineResponse
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.system.exitProcess
 
 var isRunCold = false
 
@@ -58,5 +59,6 @@ fun publish() {
             )
         }
         .join() // block current thread until complete
+    exitProcess(0)
 }
 
