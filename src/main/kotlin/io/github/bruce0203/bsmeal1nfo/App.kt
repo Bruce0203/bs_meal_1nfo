@@ -34,15 +34,15 @@ fun publish() {
     "dayStart: $dayStart"
     --------------------------
     """)
-    if (dayStart < takenAt) {
-        println(
-            """
+    if (dayStart < takenAt && !isRunCold) {
+            println(
+                """
                     --------------------------
                    "Skipped due to already exist!" 
                     --------------------------
                 """
-        )
-        if (!isRunCold) return
+            )
+            return
     }
     val caption = SimpleDateFormat("yyyy.MM.dd(${getWeek()})").format(Date())
     client.actions()
