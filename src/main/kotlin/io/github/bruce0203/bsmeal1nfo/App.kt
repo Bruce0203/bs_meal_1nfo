@@ -43,7 +43,7 @@ fun publish() {
                     --------------------------
                 """
             )
-            return
+            //return
     }
     val caption = SimpleDateFormat("yyyy.MM.dd(${getWeek()})").format(Date())
     client.actions()
