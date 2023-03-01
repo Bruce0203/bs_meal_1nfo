@@ -9,7 +9,6 @@ import javax.imageio.ImageIO
 
 
 object AddTextToImg {
-    @Throws(Exception::class)
     @JvmStatic
     fun execute(file: File, txt: String, out: File) {
         //read the image
