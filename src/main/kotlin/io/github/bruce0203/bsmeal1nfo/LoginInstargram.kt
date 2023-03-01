@@ -17,14 +17,10 @@ fun getTOTPCode(secretKey: String?): String? {
 
 fun login(): IGClient {
     val inputCode = Callable { getTOTPCode(System.getenv("OTP_SECRET")) }
-    val twoFactorHandler = IGClient.Builder.LoginHandler { client: IGClient, response: LoginResponse ->
-        IGChallengeUtils.resolveTwoFactor(client, response, inputCode)
-    }
-
     val client = IGClient.builder()
         .username(System.getenv("INSTARGRAM_USERNAME"))
         .password(System.getenv("INSTARGRAM_PASSWORD"))
-        .onTwoFactor(twoFactorHandler)
+        .onTwoFactor { client, response -> IGChallengeUtils.resolveTwoFactor(client, response, inputCode) }
         .login()
     return client
 }
