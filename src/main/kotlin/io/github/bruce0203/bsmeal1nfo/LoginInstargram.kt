@@ -22,7 +22,6 @@ fun login(): IGClient {
     val client = IGClient.builder()
         .username(System.getenv("INSTARGRAM_USERNAME"))
         .password(System.getenv("INSTARGRAM_PASSWORD"))
-        .onTwoFactor(function)
         .onChallenge(function)
         .login()
     return client
