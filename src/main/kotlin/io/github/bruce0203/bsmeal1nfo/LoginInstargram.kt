@@ -1,7 +1,6 @@
 package io.github.bruce0203.bsmeal1nfo
 
 import com.github.instagram4j.instagram4j.IGClient
-import com.github.instagram4j.instagram4j.responses.accounts.LoginResponse
 import com.github.instagram4j.instagram4j.utils.IGChallengeUtils
 import de.taimos.totp.TOTP
 import org.apache.commons.codec.binary.Base32
@@ -17,12 +16,11 @@ fun getTOTPCode(secretKey: String?): String? {
 
 fun login(): IGClient {
     val inputCode = Callable { getTOTPCode(System.getenv("OTP_SECRET")) }
-    val function: (client: IGClient, t: LoginResponse) -> LoginResponse =
-        { client, response -> IGChallengeUtils.resolveTwoFactor(client, response, inputCode) }
     val client = IGClient.builder()
         .username(System.getenv("INSTARGRAM_USERNAME"))
         .password(System.getenv("INSTARGRAM_PASSWORD"))
-        .onChallenge(function)
+        .onTwoFactor { client, response -> IGChallengeUtils.resolveTwoFactor(client, response, inputCode) }
+        .onChallenge { client, response -> IGChallengeUtils.resolveChallenge(client, response, inputCode) }
         .login()
     return client
 }
