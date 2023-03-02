@@ -20,7 +20,6 @@ fun login(): IGClient {
         .username(System.getenv("INSTARGRAM_USERNAME"))
         .password(System.getenv("INSTARGRAM_PASSWORD"))
         .onTwoFactor { client, response -> IGChallengeUtils.resolveTwoFactor(client, response, inputCode) }
-        .onChallenge { client, response -> IGChallengeUtils.resolveChallenge(client, response, inputCode) }
         .login()
     return client
 }
