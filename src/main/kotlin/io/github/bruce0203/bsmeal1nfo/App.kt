@@ -1,7 +1,5 @@
 package io.github.bruce0203.bsmeal1nfo
 
-import com.github.instagram4j.instagram4j.responses.media.MediaResponse.MediaConfigureTimelineResponse
-import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.system.exitProcess
 
@@ -10,12 +8,6 @@ var isRunCold = false
 fun main(args: Array<String>) {
     isRunCold = args.getOrElse(0) { "false" }.toBoolean()
     publish()
-}
-
-fun getWeek(): String {
-    val cal = Calendar.getInstance()
-    cal.time = Date()
-    return cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.NARROW_FORMAT, Locale.KOREAN)
 }
 
 fun publish() {
@@ -44,11 +36,10 @@ fun publish() {
                 """
             )
     }
-    val caption = SimpleDateFormat("yyyy.MM.dd(${getWeek()})").format(Date())
     client.actions()
-        .timeline()
-        .uploadPhoto(createImg(lunch), caption)
-        .thenAccept { response: MediaConfigureTimelineResponse? ->
+        .story()
+        .uploadPhoto(createImg(lunch))
+        .thenAccept {
             println(
                 """
                     --------------------------
