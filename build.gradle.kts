@@ -25,9 +25,12 @@ tasks.withType<Jar> {
 
 repositories {
     mavenCentral()
+    maven { url = uri("https://jitpack.io") }
 }
 
 dependencies {
+    api("io.github.leeseojune53:neis-api:1.0.3")
+
     api("org.slf4j:slf4j-api:1.7.36")
     api("org.slf4j:slf4j-simple:1.7.36")
     implementation("com.github.instagram4j:instagram4j:2.0.7")
@@ -41,4 +44,8 @@ dependencies {
 
 sourceSets.getByName("main") {
     resources.srcDir("assets")
+}
+
+java {
+    toolchain.languageVersion.set(JavaLanguageVersion.of(11))
 }

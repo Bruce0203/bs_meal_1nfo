@@ -1,14 +1,23 @@
 package io.github.bruce0203.bsmeal1nfo
 
-import kr.go.neis.api.School
+import com.leeseojune.neisapi.NeisApi
+import java.text.SimpleDateFormat
 import java.util.*
 
+
 fun getMyLunch(): String {
-    val school = School.find(School.Region.valueOf(System.getenv("SCHOOL_REGION")), System.getenv("SCHOOL_NAME"))
+    val neis = NeisApi.Builder()
+        .build()
+    val sch = neis
+        .getSchoolByName("백신고등학교").first()
+    val meal = neis.getMealsByAbsoluteDay(getNowDate(), sch.scCode, sch.schoolCode)
+    return meal.lunch.joinToString("\n")
+}
+
+fun getNowDate(): String = run {
     val cal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"))
-    cal.time = Date()
-    val menu = school.getMonthlyMenu(cal[Calendar.YEAR], cal[Calendar.MONTH] + 1)
-    return menu[cal[Calendar.DATE] - 1].lunch.run(::removeNumbersInString).apply(::assertIsLunch)
+    val dt1 = SimpleDateFormat("YYYYMMdd")
+    dt1.format(cal.time).toString()
 }
 
 fun removeNumbersInString(input: String): String {
