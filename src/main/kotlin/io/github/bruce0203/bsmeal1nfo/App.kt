@@ -7,6 +7,7 @@ fun main(args: Array<String>) {
 }
 
 fun publish() {
+    println("getting my launch...")
     val lunch = getMyLunch()
     val client = login()
     client.actions()
