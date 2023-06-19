@@ -10,7 +10,7 @@ fun getMyLunch(): String {
     val neis = NeisApi.Builder()
         .build()
 
-    val schoolName = String(System.getenv("SCHOOL_NAME").toByteArray(), StandardCharsets.UTF_8)
+    val schoolName = "백신고등학교"//System.getenv("SCHOOL_NAME")
     val sch = neis.getSchoolByName(schoolName).first()
     val meal = neis.getMealsByAbsoluteDay(getNowDate(), sch.scCode, sch.schoolCode)
     return meal.lunch.joinToString("\n")
