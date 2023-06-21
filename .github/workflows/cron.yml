@@ -11,7 +11,7 @@ env:
   SCHOOL_REGION: ${{ secrets.SCHOOL_REGION }}
 jobs:
   gradle:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: checkout
         uses: actions/checkout@v2
